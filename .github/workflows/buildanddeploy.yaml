@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -21,7 +21,7 @@ jobs:
       - name: Publish
         run: dotnet publish --configuration Release --no-build
       - name: Upload Build Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: CSharpRegexBenchmark
           path: /home/runner/work/CSharpRegexBenchmark/CSharpRegexBenchmark/CSharpRegexBenchmark/bin/Release/net7.0/publish/
