@@ -1,17 +1,19 @@
 name: BuildAndDeploy
-on:
-    push:
-        branches: [ master ]
+
+on: [push]
+
 jobs:
-    build:
-        runs-on: windows-latest
-        steps:
-            uses: actions/checkout@v3
-            -name: Setup .NET Core SDK
-            uses: actions/setup-dotnet@v2
-            with:
-                dotnet-version: 7.x
-            -name: Install dependencies
-            run: dotnet restore
-            -name: Build
-            run: dotnet build --configuration Release --no-restore
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 7.x
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
