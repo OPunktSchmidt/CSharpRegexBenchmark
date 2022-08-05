@@ -20,3 +20,8 @@ jobs:
         run: dotnet build --configuration Release --no-restore
       - name: Publish
         run: dotnet publish --configuration Release --no-build
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: CSharpRegexBenchmark
+          path: /home/runner/work/CSharpRegexBenchmark/CSharpRegexBenchmark/CSharpRegexBenchmark/bin/Release/net7.0/publish/
