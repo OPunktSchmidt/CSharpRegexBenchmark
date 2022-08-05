@@ -24,4 +24,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: CSharpRegexBenchmark
-          path: /home/runner/work/CSharpRegexBenchmark/CSharpRegexBenchmark/CSharpRegexBenchmark/bin/Release/net7.0/publish/
+          path: D:\a\CSharpRegexBenchmark\CSharpRegexBenchmark\CSharpRegexBenchmark\bin\Release\net7.0\publish\
