@@ -22,10 +22,48 @@ Benchmarking regular expressions is tricky. After all, we want the benchmark to 
 
 ## What options does .Net (from .Net 7 and C#11) offer for executing regular expressions?
 
-1. Interpreted
+**1. Interpreted** 
+
+The regular expression is interpreted. This is usually slow.
+
 ```cs
-for (int i = 0 ; i < 10; i++)
-   {
-     // Code to execute.
-   }
+var regex = new Regex(@"\w", RegexOptions.CultureInvariant);
+regex.Matches("test");
+```
+
+**2. Runtime compiled** 
+
+The regular expression is compiled into machine code at runtime. This is usually faster, but it takes a one-off time to compile. Depending on how complex the regular expression is and how often you want it to be executed, interpreted mode can be faster because it eliminates the time it takes to compile.
+
+```cs
+var regex = new Regex(@"\w", RegexOptions.Compiled | RegexOptions.CultureInvariant);
+regex.Matches("test");
+```
+
+**3. Runtime compiled** 
+
+This feature is only available from .Net 7. The regular expression is compiled at build time. On the one hand, this eliminates the need for compilation at runtime. On the other hand, the compiler can theoretically make further optimizations than with RegexOptions.Compiled at runtime. However, in .Net 7, RegexGenerator and RegexOptions.Compiled seem to do the same optimizations, so there's no benefit here. It will be interesting to see how this develops in future .Net releases.
+
+```cs
+[RegexGenerator(@"\w", RegexOptions.CultureInvariant)]
+private static partial Regex GetBuildtimeCompiledMatchRegex();
+```
+⚠ Warning ⚠
+
+[RegexGenerator] cannot compile all regular expressions. This is not immediately noticeable and you only notice it when you look at the generated code. RegexGenerator generates C# code that natively implements the regular expression. If the regular expression is not supported, the generated code will just say something like:
+
+```cs
+ [GeneratedCodeAttribute("System.Text.RegularExpressions.Generator", "7.0.6.32404")]
+ [EditorBrowsable(EditorBrowsableState.Never)]
+ internal static class __58a41014
+ {
+      /// <summary>Caches a <see cref="Regex"/> instance for the GetCompiledRegex method.</summary>
+      /// <remarks>A custom Regex-derived type could not be generated because the expression contains case-insensitive backreferences which are not supported by the source generator.</remarks>
+      internal sealed class GetCompiledRegex_0 : Regex
+      {
+          /// <summary>Cached, thread-safe singleton instance.</summary>
+          internal static readonly Regex Instance = new("(\\b[\\w]+(['\\-]\\w+)?\\b)(?=.*\\1)", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+      }
+        
+ }
 ```
