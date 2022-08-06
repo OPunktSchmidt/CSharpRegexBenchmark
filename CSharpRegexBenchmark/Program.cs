@@ -1,12 +1,21 @@
-﻿namespace CSharpRegexBenchmark
+﻿
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace CSharpRegexBenchmark
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            IHost host = Host.CreateDefaultBuilder(args)
+                 .ConfigureServices((hostContext, services) =>
+                 {
+                     services.AddHostedService<ApplicationWorker>();
+                 })
+                 .Build();
 
-            Console.ReadKey();
+            host.Run();
         }
     }
 }
