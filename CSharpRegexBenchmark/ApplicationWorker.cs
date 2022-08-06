@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using BenchmarkDotNet.Running;
+using CSharpRegexBenchmark.Benchmarks;
 
 namespace CSharpRegexBenchmark
 {
@@ -22,7 +23,8 @@ namespace CSharpRegexBenchmark
 
             await Task.Run(() =>
             {
-                BenchmarkRunner.Run<BenchmarkCase>();
+                BenchmarkRunner.Run<WarumUpBenchmarkCase>();
+                BenchmarkRunner.Run<MatchBenchmarkCase>();
             });
         }
 
