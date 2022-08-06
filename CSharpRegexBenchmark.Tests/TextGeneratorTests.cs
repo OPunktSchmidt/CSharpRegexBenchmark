@@ -35,7 +35,7 @@ namespace CSharpRegexBenchmark.Tests
             var repeatedWordCount = splittedText.Count(x => x == "gubergren");
 
             Assert.That(splittedText.Length, Is.EqualTo(numberOfWords));
-            Assert.That(repeatedWordCount, Is.EqualTo(expectedRepeatCount));
+            Assert.That(repeatedWordCount, Is.EqualTo(1));
         }
     }
 }
