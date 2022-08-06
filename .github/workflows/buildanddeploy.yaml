@@ -19,16 +19,16 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
       - name: Test
-        run: dotnet test --configuration Release --no-build --logger "trx;logfilename=testResults.trx"
+        run: dotnet test --configuration Release --no-build --logger "trx;logfilename=TestResults.trx"
       - name: Publish
         run: dotnet publish --configuration Release --no-build
       - name: Upload Build Result
         uses: actions/upload-artifact@v3
         with:
-          name: CSharpRegexBenchmark
+          name: CSharpRegexBenchmark - Program
           path: D:\a\CSharpRegexBenchmark\CSharpRegexBenchmark\CSharpRegexBenchmark\bin\Release\net7.0\publish\
       - name: Upload Test Result
         uses: actions/upload-artifact@v3
         with:
-          name: CSharpRegexBenchmark
+          name: CSharpRegexBenchmark - TestResults
           path: D:\a\CSharpRegexBenchmark\CSharpRegexBenchmark\CSharpRegexBenchmark.Tests\TestResults\
